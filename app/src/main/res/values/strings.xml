@@ -9,7 +9,11 @@
     <string name="title_activity_login">Sign in</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_name">Nombre</string>
+    <string name="prompt_surname">Apellido</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="prompt_password_2">Confirmar contraseña</string>
+    <string name="action_registered">Register</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -19,4 +23,5 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_register">RegisterActivity</string>
 </resources>
