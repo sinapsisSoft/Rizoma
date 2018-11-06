@@ -1,8 +1,12 @@
 package com.sinapsissoft.rizoma;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,9 +16,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.sinapsissoft.rizoma.adapters.AdapterCrops;
+import com.sinapsissoft.rizoma.dto.Product;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private TextView textView;
+    private RecyclerView recyclerViewCrop;
+    private AdapterCrops mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +55,32 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        recyclerViewCrop=(RecyclerView)findViewById(R.id.recycler_view_crops);
+        recyclerViewCrop.setLayoutManager(new LinearLayoutManager(this));
+
+        // Declaración el ArrayList
+        List<Product> listCrops = new ArrayList<>();
+
+// Añadimos 10 Elementos en el ArrayList
+         Product product;
+        for(int i=0; i<10; i++){
+            product=new Product();
+            product.setProductName("Elemento: "+i);
+            product.setProducDescription("Descripción del elemento  "+i);
+            listCrops.add(product);
+        }
+
+        mAdapter=new AdapterCrops();
+        mAdapter.setDataSet(listCrops);
+        recyclerViewCrop.setAdapter(mAdapter);
+
+        Intent intent=getIntent();
+        String message=intent.getStringExtra(LoginActivity.EXTRA_MESSAGE);
+
+
+       // textView=(TextView)findViewById(R.id.text_home);
+        //textView.setText(message);
     }
 
     @Override
