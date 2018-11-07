@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sinapsissoft.rizoma.adapters.AdapterCrops;
 import com.sinapsissoft.rizoma.dto.Product;
@@ -60,19 +61,22 @@ public class MainActivity extends AppCompatActivity
         recyclerViewCrop.setLayoutManager(new LinearLayoutManager(this));
 
         // Declaración el ArrayList
-        List<Product> listCrops = new ArrayList<>();
+        final List<Product> listCrops = new ArrayList<>();
 
 // Añadimos 10 Elementos en el ArrayList
          Product product;
         for(int i=0; i<10; i++){
             product=new Product();
+            product.setProductId(i);
             product.setProductName("Elemento: "+i);
             product.setProducDescription("Descripción del elemento  "+i);
             listCrops.add(product);
         }
 
         mAdapter=new AdapterCrops();
+
         mAdapter.setDataSet(listCrops);
+
         recyclerViewCrop.setAdapter(mAdapter);
 
         Intent intent=getIntent();
