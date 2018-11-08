@@ -1,4 +1,4 @@
-package com.sinapsissoft.rizoma;
+package com.sinapsissoft.rizoma.fragment;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.sinapsissoft.rizoma.R;
 
 
 /**
@@ -50,6 +52,11 @@ public class CropFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+    @Override
+    public void onActivityCreated(Bundle state){
+        super.onActivityCreated(state);
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +70,9 @@ public class CropFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_crop, container, false);
+        // Please note the third parameter should be false, otherwise a java.lang.IllegalStateException maybe thrown.
+        View retView = inflater.inflate(R.layout.fragment_view_crop, container, false);
+        return retView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,4 +113,5 @@ public class CropFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }
