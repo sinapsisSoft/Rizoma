@@ -5,11 +5,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.sinapsissoft.rizoma.fragment.AlertCropFragment;
 import com.sinapsissoft.rizoma.fragment.ConfigurationCropFragment;
@@ -17,7 +21,7 @@ import com.sinapsissoft.rizoma.fragment.CropFragment;
 import com.sinapsissoft.rizoma.fragment.PestFragment;
 
 
-public class DetailCrop extends AppCompatActivity implements CropFragment.OnFragmentInteractionListener, AlertCropFragment.OnFragmentInteractionListener, ConfigurationCropFragment.OnFragmentInteractionListener, PestFragment.OnFragmentInteractionListener {
+public class DetailCrop extends AppCompatActivity implements CropFragment.OnFragmentInteractionListener, AlertCropFragment.OnFragmentInteractionListener, ConfigurationCropFragment.OnFragmentInteractionListener, PestFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +80,7 @@ public class DetailCrop extends AppCompatActivity implements CropFragment.OnFrag
                     return true;
                 case R.id.navigation_notifications:
                     selectViewFragments(3);
+                    Toast.makeText(getApplicationContext(),"Datos:"+menuItem.getTitle(),Toast.LENGTH_LONG).show();
                     return true;
             }
             return false;
@@ -90,5 +95,21 @@ public class DetailCrop extends AppCompatActivity implements CropFragment.OnFrag
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        return false;
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater inflater=getMenuInflater();
+
+
+        inflater.inflate(R.menu.main, menu);
+        //menu.getItem(0).setVisible(false);
+        return true;
     }
 }

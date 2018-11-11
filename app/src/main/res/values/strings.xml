@@ -25,9 +25,10 @@
     </string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_detail_crop">DetailCrop</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_crop">Cultivo</string>
+    <string name="title_pets">Plagas</string>
+    <string name="title_notifications">Notificaciones</string>
+    <string name="title_configuration">Configuración</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
