@@ -9,7 +9,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,6 +23,7 @@
                 android:id="@+id/cardViewCrops"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="visible"
                 card_view:cardCornerRadius="6dp"
                 card_view:cardElevation="10dp"
                 card_view:cardUseCompatPadding="true">
@@ -55,10 +59,315 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/image_product"
                         android:padding="@dimen/fab_margin"
-                        android:text="La acelga es una planta que se caracteriza por su intenso color verde, sus grandes hojas comestibles y por su nervio central muy desarrollado. Mayormente se la cultiva con la misión de usarla como alimento en las comidas, aunque también se le reconocen beneficios para la salud. I Definicion ABC https://www.definicionabc.com/general/acelga.php"
-                        />
+                        android:text="La acelga es una planta que se caracteriza por su intenso color verde, sus grandes hojas comestibles y por su nervio central muy desarrollado. Mayormente se la cultiva con la misión de usarla como alimento en las comidas, aunque también se le reconocen beneficios para la salud. I Definicion ABC https://www.definicionabc.com/general/acelga.php" />
                 </RelativeLayout>
 
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardCropDataSheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardCornerRadius="6dp"
+                card_view:cardElevation="10dp"
+                card_view:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        android:background="#8c000000"
+                        android:padding="3dip"
+                        android:text="@string/title_view_crops_data_sheet"
+                        android:textColor="#ffe3e3e3"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        android:gravity="center"
+                        android:padding="3dip"
+                        android:text="@string/text_crops_description"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:text="@string/text_crops_long"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TableLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <TableRow>
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:padding="10dp"
+                                        android:text="Largo" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:padding="10dp"
+                                        android:text="[10 m]" />
+                                </TableRow>
+
+                                <TableRow>
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:padding="10dp"
+                                        android:text="Ancho" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:padding="10dp"
+                                        android:text="[10 m]" />
+
+                                </TableRow>
+
+                                <TableRow>
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:padding="10dp"
+                                        android:text="Profundidad" />
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:padding="10dp"
+                                        android:text="[10 cm]" />
+
+                                </TableRow>
+                            </TableLayout>
+                        </LinearLayout>
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:orientation="vertical">
+
+                            <TableRow>
+
+                                <CheckBox
+                                    android:id="@+id/checkBox"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/text_crops_irrigation" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <CheckBox
+                                    android:id="@+id/checkBox2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+
+                                    android:text="Fertilizante" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:padding="5dp"
+                                    android:text="Ninguno" />
+                            </TableRow>
+
+                            <TableRow>
+
+                                <CheckBox
+                                    android:id="@+id/checkBox1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Pesticidas" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:padding="5dp"
+                                    android:text="Ninguno" />
+                            </TableRow>
+
+                        </TableLayout>
+
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@string/text_crops_requited"
+                            android:textStyle="bold" />
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TableRow>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_column="1"
+                                    android:padding="5dp"
+                                    android:text="Temperatura Ambiente:" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_column="2"
+                                    android:padding="5dp"
+                                    android:text="[12° C]" />
+
+                            </TableRow>
+
+                            <TableRow>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_column="1"
+                                    android:padding="5dp"
+                                    android:text="Humedad Ambiente:" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_column="2"
+                                    android:padding="5dp"
+                                    android:text="[12° C]" />
+
+                            </TableRow>
+
+                            <TableRow>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_column="1"
+                                    android:padding="5dp"
+                                    android:text="Temperatura Tierra:" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_column="2"
+                                    android:padding="5dp"
+                                    android:text="[9° C]" />
+
+                            </TableRow>
+
+                            <TableRow>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_column="1"
+                                    android:padding="5dp"
+                                    android:text="Luz Ambiente:" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_column="2"
+                                    android:padding="5dp"
+                                    android:text="[9 Lum]" />
+
+                            </TableRow>
+
+                        </TableLayout>
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#8c000000"
+                        android:gravity="center"
+                        android:padding="3dip"
+                        android:text="@string/title_view_crops_table_element"
+                        android:textColor="#ffe3e3e3"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="visible">
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_column="0"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/text_crops_count" />
+
+                            <TextView
+                                android:layout_width="30dp"
+                                android:layout_column="1"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/text_crops_unit"></TextView>
+
+                            <TextView
+                                android:layout_width="30dp"
+                                android:layout_column="2"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/text_crops_data"></TextView>
+                        </TableRow>
+
+                    </TableLayout>
+
+                    <ListView
+                        android:id="@+id/elements_crops"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></ListView>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
     </ScrollView>
