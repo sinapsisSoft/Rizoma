@@ -1,4 +1,8 @@
 <resources>
+    <!-- Strings view Pest -->
+    <string name="text_pets">Descripción</string>
+    <string name="text_pets_solution">Solución</string>
+
     <string name="app_name">Rizoma</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -14,6 +18,7 @@
     <string name="prompt_password">Contraseña</string>
     <string name="prompt_password_2">Confirmar contraseña</string>
     <string name="action_registered">Register</string>
+    <string name="text_general">Texto</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -29,6 +34,7 @@
     <string name="title_pets">Plagas</string>
     <string name="title_notifications">Notificaciones</string>
     <string name="title_configuration">Configuración</string>
+    <string name="title_cycle_crop">Ciclos</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -16,12 +16,14 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.sinapsissoft.rizoma.fragment.AlertCropFragment;
-import com.sinapsissoft.rizoma.fragment.ConfigurationCropFragment;
+import com.sinapsissoft.rizoma.fragment.ConfigurateCropFragment;
+import com.sinapsissoft.rizoma.fragment.CycleCropFragment;
 import com.sinapsissoft.rizoma.fragment.CropFragment;
 import com.sinapsissoft.rizoma.fragment.PestFragment;
 
 
-public class DetailCrop extends AppCompatActivity implements CropFragment.OnFragmentInteractionListener, AlertCropFragment.OnFragmentInteractionListener, ConfigurationCropFragment.OnFragmentInteractionListener, PestFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
+public class DetailCrop extends AppCompatActivity implements ConfigurateCropFragment.OnFragmentInteractionListener,CropFragment.OnFragmentInteractionListener, AlertCropFragment.OnFragmentInteractionListener, CycleCropFragment.OnFragmentInteractionListener, PestFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,11 @@ public class DetailCrop extends AppCompatActivity implements CropFragment.OnFrag
         this.selectViewFragments(0);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+        loadView();
+
+    }
+
+    public void loadView() {
 
     }
 
@@ -56,10 +63,13 @@ public class DetailCrop extends AppCompatActivity implements CropFragment.OnFrag
                 fragment = new PestFragment();
                 break;
             case 2:
-                fragment = new ConfigurationCropFragment();
+                fragment = new CycleCropFragment();
                 break;
             case 3:
                 fragment = new AlertCropFragment();
+                break;
+            case 4:
+                fragment = new ConfigurateCropFragment();
                 break;
         }
         this.replaceFragment(fragment);
@@ -80,7 +90,7 @@ public class DetailCrop extends AppCompatActivity implements CropFragment.OnFrag
                     return true;
                 case R.id.navigation_notifications:
                     selectViewFragments(3);
-                    Toast.makeText(getApplicationContext(),"Datos:"+menuItem.getTitle(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Datos:" + menuItem.getTitle(), Toast.LENGTH_LONG).show();
                     return true;
             }
             return false;
@@ -102,14 +112,32 @@ public class DetailCrop extends AppCompatActivity implements CropFragment.OnFrag
 
         return false;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        MenuInflater inflater=getMenuInflater();
+        MenuInflater inflater = getMenuInflater();
 
 
-        inflater.inflate(R.menu.main, menu);
+        inflater.inflate(R.menu.detail, menu);
         //menu.getItem(0).setVisible(false);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_configuration_crop) {
+            selectViewFragments(4);
+            Toast.makeText(this, "Gone", Toast.LENGTH_LONG).show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
