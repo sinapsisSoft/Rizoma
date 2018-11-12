@@ -3,10 +3,14 @@ package com.sinapsissoft.rizoma.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.sinapsissoft.rizoma.R;
 
@@ -23,6 +27,7 @@ public class CycleCropFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private BottomNavigationView navigation;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -62,11 +67,34 @@ public class CycleCropFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cycle_crop, container, false);
+        View view=inflater.inflate(R.layout.fragment_cycle_crop, container, false);
+        navigation= (BottomNavigationView) view.findViewById(R.id.navigation_cycle_crop);
+        navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+        return view;
     }
+    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            switch (menuItem.getItemId()) {
+                case R.id.navigation_crop:
+                   // selectViewFragments(0);
+                    return true;
+                case R.id.navigation_pests:
+                    //selectViewFragments(1);
+                    return true;
+                case R.id.navigation_configuration:
+                    //selectViewFragments(2);
+                    return true;
+                case R.id.navigation_notifications:
+                    //selectViewFragments(3);
+                    //Toast.makeText(getApplicationContext(), "Datos:" + menuItem.getTitle(), Toast.LENGTH_LONG).show();
+                    return true;
+            }
+            return false;
+        }
+    };
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

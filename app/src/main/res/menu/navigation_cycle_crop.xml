@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_crop"
+        android:icon="@drawable/ic_cycle1_crop_24pd"
+        android:title="@string/title_cycle1_crops" />
+
+    <item
+        android:id="@+id/navigation_pests"
+        android:icon="@drawable/ic_cycle2_crop_24pd"
+        android:title="@string/title_cycle2_crops" />
+    <item
+        android:id="@+id/navigation_configuration"
+        android:icon="@drawable/ic_cycle3_crop_24pd"
+        android:title="@string/title_cycle3_crops" />
+
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_cycle4_crop_24pd"
+        android:title="@string/title_cycle4_crops" />
+
+</menu>
