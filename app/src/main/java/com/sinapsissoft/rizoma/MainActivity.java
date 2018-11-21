@@ -65,11 +65,20 @@ public class MainActivity extends AppCompatActivity
 
 // Añadimos 10 Elementos en el ArrayList
          Product product;
-        for(int i=0; i<10; i++){
+        for(int i=0; i<1; i++){
             product=new Product();
             product.setProductId(i);
-            product.setProductName("Elemento: "+i);
-            product.setProducDescription("Descripción del elemento  "+i);
+            product.setProductName("Producto: Acelga");
+            product.setProducDescription("Descripción: La acelga es una planta bianual y de ciclo largo que no forma raíz o fruto comestible.\n" +
+                    "\n" +
+                    "El vástago floral alcanza una altura promedio de 1,20 m.\n" +
+                    "\n" +
+                    "Las flores son sésiles y hermafroditas pudiendo aparecer solas o en grupos de dos o tres.\n" +
+                    "\n" +
+                    "El cáliz es de color verdoso y está compuesto por 5 sépalos y 5 pétalos.\n" +
+                    "\n" +
+                    "Las semillas son muy pequeñas y están encerradas en un pequeño fruto al que comúnmente se le llama semilla (realmente es un fruto), el que contiene de 3 a 4 semillas.");
+            product.setProductImgId(R.drawable.acelga);
             listCrops.add(product);
         }
 

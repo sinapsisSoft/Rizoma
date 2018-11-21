@@ -40,11 +40,11 @@
     <string name="title_cycle2_crops">Ahijamiento</string>
     <string name="title_cycle3_crops">Gran Crecimiento</string>
     <string name="title_cycle4_crops">Maduración</string>
-<!--Text view cycle crops-->
+    <!--Text view cycle crops-->
     <string name="title_view_crops_data_sheet">Ficha Técnica</string>
     <string name="title_view_crops_table_element">Tabla de Elementos</string>
-<string name="text_crops_data">Cantidad</string>
-        <string name="text_crops_count">Elemento</string>
+    <string name="text_crops_data">Cantidad</string>
+    <string name="text_crops_count">Elemento</string>
     <string name="text_crops_unit">Unidad</string>
     <string name="text_crops_description">Descripcion</string>
     <string name="text_crops_long">Longitud del cultivo</string>
@@ -53,7 +53,7 @@
     <string name="text_crops_requited">Edafoclimático</string>
     <string name="text_crops_width">Ancho</string>
     <string name="text_crops_height">Alto</string>
-
+    <string name="text_crops_counts">Número de plantas</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

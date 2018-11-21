@@ -58,6 +58,7 @@ public class AdapterPest extends RecyclerView.Adapter<AdapterPest.MyViewHolder> 
         myViewHolder.tvPestDescription.setText(pestList.get(i).getPestDescription());
         myViewHolder.tvPestDescriptionSolution.setText(pestList.get(i).getPestCtrlName());
         //myViewHolder.tvPestName.setText(pestList.get(i).getPestName());
+        myViewHolder.imgPestImage.setImageResource(pestList.get(i).getPestImgId());
     }
 
     @Override

@@ -5,14 +5,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.sinapsissoft.rizoma.R;
+import com.sinapsissoft.rizoma.my_class.MyDatePickerFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +37,7 @@ public class CycleCropFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private Button btnViewDataPick;
 
     public CycleCropFragment() {
         // Required empty public constructor
@@ -65,6 +69,10 @@ public class CycleCropFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    public void showDatePicker() {
+        DialogFragment newFragment = new MyDatePickerFragment();
+        newFragment.show(getFragmentManager() , "date picker");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,6 +80,13 @@ public class CycleCropFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_cycle_crop, container, false);
         navigation= (BottomNavigationView) view.findViewById(R.id.navigation_cycle_crop);
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+        btnViewDataPick=view.findViewById(R.id.btnDatePick);
+        btnViewDataPick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker();
+            }
+        });
         return view;
     }
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {

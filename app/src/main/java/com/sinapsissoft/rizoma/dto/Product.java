@@ -10,6 +10,7 @@ public class Product {
     private String productNameScientific;
     private String productUtilization;
     private String productImg;
+    private Integer productImgId;
 
     public Product(Integer productId, Integer cropsId, String productName, String producDescription, String productType, String productCondition, String productNameScientific, String productUtilization, String productImg) {
         this.productId = productId;
@@ -21,10 +22,27 @@ public class Product {
         this.productNameScientific = productNameScientific;
         this.productUtilization = productUtilization;
         this.productImg = productImg;
+
     }
 
     public Product() {
 
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
+
+    public Integer getProductImgId() {
+        return productImgId;
+    }
+
+    public void setProductImgId(Integer productImgId) {
+        this.productImgId = productImgId;
     }
 
     public Integer getProductId() {

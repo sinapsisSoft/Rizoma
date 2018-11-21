@@ -81,13 +81,34 @@ public class PestFragment extends Fragment {
         recyclerViewPest=view.findViewById(R.id.recycle_view_pest);
         mProgressBarLoading=view.findViewById(R.id.progressBarLoading);
         recyclerViewPest.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ArrayList<Integer> arrayListImg=new ArrayList<>();
+        arrayListImg.add(R.drawable.pulgon_negro);
+        arrayListImg.add(R.drawable.pulguilla_remolacha);
+        arrayListImg.add(R.drawable.mosca_reolacha);
+
+        ArrayList<String> arrayListTitle=new ArrayList<>();
+        arrayListTitle.add("Pulgón negro");
+        arrayListTitle.add("Pulguilla de la remolacha");
+        arrayListTitle.add("Mosca de la remolacha");
+
+        ArrayList<String> arrayListDescription=new ArrayList<>();
+        arrayListDescription.add("Los pulgones son insectos pequeños de apenas unos milímetros de largo, pero fáciles de ver a simple vista. Pertenecen al orden de los hemípteros como las cochinillas y las moscas blancas, que tal vez te resulten familiares. Al igual que éstas, se alimentan de los jugos de las plantas. Su aparato bucal picador y chupador les sirve para perforar la planta y succionar su savia");
+        arrayListDescription.add("Pulguilla de la remolacha");
+        arrayListDescription.add("Mosca de la remolacha");
+
+        ArrayList<String> arrayListSolution=new ArrayList<>();
+        arrayListSolution.add("Si esto te fuera imposible por la cantidad de plantas afectadas, puedes aplicar un tratamiento con jabón potásico. Diluyes este producto al 2% en agua (o lo que es lo mismo, 20ml. de jabón por cada litro de agua) y lo pulverizas sobre las zonas afectadas, verás que enseguida notas mejoría. A pesar de ello deberás volver a tratar a las 2 semanas para asegurar la eliminación del pulgón. Yo te aconsejo que hagas al menos 3 aplicaciones, respetando estos plazos de tiempo. No olvides rociar bien la parte posterior de las hojas.;");
+        arrayListSolution.add("Pulguilla de la remolacha");
+        arrayListSolution.add("Mosca de la remolacha");
+
         final ArrayList<Pest> listPest = new ArrayList<>();
-        for(int i=0; i<10; i++){
+        for(int i=0; i<3; i++){
             pest=new Pest();
             pest.setPestId(i);
-            pest.setPestName("Plaga: "+i);
-            pest.setPestDescription("Descripción del plaga  "+i);
-            pest.setPestCtrlName("Descripción del la solución "+i);
+            pest.setPestName("Plaga: "+arrayListTitle.get(i));
+            pest.setPestDescription("Descripción del plaga  "+arrayListDescription.get(i));
+            pest.setPestCtrlName("Descripción del la solución "+arrayListSolution.get(i));
+            pest.setPestImgId(arrayListImg.get(i));
             listPest.add(pest);
         }
         adapterPest=new AdapterPest();

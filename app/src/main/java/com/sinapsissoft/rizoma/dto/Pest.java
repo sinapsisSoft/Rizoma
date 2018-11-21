@@ -6,11 +6,20 @@ public class Pest {
     private String PestName;
     private String PestDescription;
     private String PestImg;
+    private Integer PestImgId;
     private String PestType;
     private String PestCtrlName;
 
 
     public Pest() {
+    }
+
+    public Integer getPestImgId() {
+        return PestImgId;
+    }
+
+    public void setPestImgId(Integer pestImgId) {
+        PestImgId = pestImgId;
     }
 
     public Integer getPestCtrlId() {
