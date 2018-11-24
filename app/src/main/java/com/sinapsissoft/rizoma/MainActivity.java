@@ -25,11 +25,11 @@ import com.sinapsissoft.rizoma.dto.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView textView;
     private RecyclerView recyclerViewCrop;
     private AdapterCrops mAdapter;
+    private TextView textViewUser;
 
 
     @Override
@@ -57,16 +57,16 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        recyclerViewCrop=(RecyclerView)findViewById(R.id.recycler_view_crops);
+        recyclerViewCrop = (RecyclerView) findViewById(R.id.recycler_view_crops);
         recyclerViewCrop.setLayoutManager(new LinearLayoutManager(this));
 
         // Declaración el ArrayList
         final List<Product> listCrops = new ArrayList<>();
 
 // Añadimos 10 Elementos en el ArrayList
-         Product product;
-        for(int i=0; i<1; i++){
-            product=new Product();
+        Product product;
+        for (int i = 0; i < 1; i++) {
+            product = new Product();
             product.setProductId(i);
             product.setProductName("Producto: Acelga");
             product.setProducDescription("Descripción: La acelga es una planta bianual y de ciclo largo que no forma raíz o fruto comestible.\n" +
@@ -82,17 +82,22 @@ public class MainActivity extends AppCompatActivity
             listCrops.add(product);
         }
 
-        mAdapter=new AdapterCrops();
+        mAdapter = new AdapterCrops();
 
         mAdapter.setDataSet(listCrops);
 
         recyclerViewCrop.setAdapter(mAdapter);
 
-        Intent intent=getIntent();
-        String message=intent.getStringExtra(LoginActivity.EXTRA_MESSAGE);
 
+        String userEmail = getIntent().getStringExtra(LoginActivity.EXTRA_MESSAGE_LOGIN);
 
-       // textView=(TextView)findViewById(R.id.text_home);
+        NavigationView navigationView1=(NavigationView)findViewById(R.id.nav_view);
+        View headerView =navigationView.getHeaderView(0);
+        textViewUser=headerView.findViewById(R.id.textUser);
+
+        textViewUser.setText(userEmail);
+
+        // textView=(TextView)findViewById(R.id.text_home);
         //textView.setText(message);
     }
 

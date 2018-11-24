@@ -1,4 +1,10 @@
 <resources>
+    <!--String view Rizoma registered User-->
+    <string name="text_user">Usuario</string>
+    <string name="text_password">Contraseña</string>
+    <string name="text_password_validate">Comprobar contraseña</string>
+    <string name="text_btn_registered">Registrar</string>
+
     <!-- Strings view Pest -->
     <string name="text_pets">Descripción</string>
     <string name="text_pets_solution">Solución</string>
