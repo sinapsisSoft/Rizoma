@@ -2,9 +2,9 @@ package com.sinapsissoft.rizoma.dto;
 
 public class Crops {
 
-    private Integer cropsId;
-    private Integer productId;
-    private Integer userId;
+    private String cropsId;
+    private String productId;
+    private String userId;
     private String cropsState;
     private String cropsDateStart;
     private String cropsDateEnd;
@@ -14,7 +14,7 @@ public class Crops {
 
     }
 
-    public Crops(Integer id, Integer product, Integer user, String state, String dateStart, String dateEnd, Integer cropsType) {
+    public Crops(String id, String product, String user, String state, String dateStart, String dateEnd, Integer cropsType) {
         this.cropsId = id;
         this.productId = product;
         this.userId = user;
@@ -24,27 +24,27 @@ public class Crops {
         this.cropsType = cropsType;
     }
 
-    public Integer getCropsId() {
+    public String getCropsId() {
         return cropsId;
     }
 
-    public void setCropsId(Integer cropsId) {
+    public void setCropsId(String cropsId) {
         this.cropsId = cropsId;
     }
 
-    public Integer getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(Integer productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

@@ -2,29 +2,48 @@ package com.sinapsissoft.rizoma.dto;
 
 public class User {
 
-    private Integer userId ;
+    private String userId ;
     private String userName;
     private String userSurname;
     private String userMail ;
     private String userPassword;
+    private String userImg;
+    private String idCrops;
 
     public User() {
 
     }
-    public User(Integer userId, String userName, String userSurname, String userMail, String userPassword) {
+
+    public User(String userId, String userName, String userSurname, String userMail, String userPassword, String userImg) {
         this.userId = userId;
         this.userName = userName;
         this.userSurname = userSurname;
         this.userMail = userMail;
         this.userPassword = userPassword;
+        this.userImg = userImg;
     }
 
+    public String getIdCrops() {
+        return idCrops;
+    }
 
-    public Integer getUserId() {
+    public void setIdCrops(String idCrops) {
+        this.idCrops = idCrops;
+    }
+
+    public String getUserImg() {
+        return userImg;
+    }
+
+    public void setUserImg(String userImg) {
+        this.userImg = userImg;
+    }
+
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -58,5 +77,10 @@ public class User {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    @Override
+    public String toString() {
+        return userName ;
     }
 }

@@ -14,9 +14,17 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.sinapsissoft.rizoma.dto.FirebaseReferences;
+import com.sinapsissoft.rizoma.dto.User;
+
+import java.util.UUID;
 
 
 public class RegisteredActivity extends AppCompatActivity implements View.OnClickListener {
@@ -28,6 +36,8 @@ public class RegisteredActivity extends AppCompatActivity implements View.OnClic
     private Button btnCreateUser;
     private FirebaseAuth firebaseAuth;
     public View focusView = null;
+    private DatabaseReference databaseReference;
+    private FirebaseDatabase firebaseDatabase;
     public static final String EXTRA_MESSAGE = "com.sinapsissoft.rizoma.MESSAGE";
 
     @Override
@@ -36,10 +46,14 @@ public class RegisteredActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_registered);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        startFirebase();
         onLoadView();
     }
-
+    private void startFirebase(){
+        FirebaseApp.initializeApp(this);
+        firebaseDatabase=FirebaseDatabase.getInstance();
+        databaseReference=firebaseDatabase.getReference();
+    }
     public void onLoadView() {
         Button btn_registered = (Button) findViewById(R.id.btn_user_create);
 
@@ -70,15 +84,18 @@ public class RegisteredActivity extends AppCompatActivity implements View.OnClic
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Valide los datos ingresados", Toast.LENGTH_LONG).show();
             focusView = textUser;
+            textUser.setError("Required");
             validate=false;
         }
         else if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Falta los datos de la contraseña", Toast.LENGTH_LONG).show();
             focusView = textPassword;
+            textPassword.setError("Required");
             validate=false;
         }
         else if (!password.equals(passwordValidate)) {
             Toast.makeText(this, "Las contraseñas no coindiden", Toast.LENGTH_LONG).show();
+            textPasswordValidate.setError("Required");
             validate=false;
         }
         if(!validate){
@@ -93,15 +110,22 @@ public class RegisteredActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    FirebaseUser user=firebaseAuth.getCurrentUser();
+
                     Toast.makeText(getApplicationContext(), "Se realizó el registro ", Toast.LENGTH_LONG).show();
+                    User u=new User();
+                    u.setUserId(user.getUid());
+                    u.setUserMail(email);
+                    u.setUserPassword(password);
+
+                    createUser(u);
+                    String []dataUser={email,password};
+                    loadViewLogin(dataUser);
                 } else {
                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
 
                         Toast.makeText(getApplicationContext(), "El usuario ya se encuentra registrado", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        String message=email+","+password;
-                        intent.putExtra(EXTRA_MESSAGE,message);
-                        getApplicationContext().startActivity(intent);
+
                     } else {
                         Toast.makeText(getApplicationContext(), "No se pudo realizar el registro", Toast.LENGTH_LONG).show();
                     }
@@ -114,7 +138,17 @@ public class RegisteredActivity extends AppCompatActivity implements View.OnClic
 
 
     }
+    private void createUser(User user){
 
+        databaseReference.child(FirebaseReferences.USERS).child(user.getUserId()).setValue(user);
+
+    }
+    public void loadViewLogin(String[]data){
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        String message=data[0]+","+data[1];
+        intent.putExtra(EXTRA_MESSAGE,message);
+        startActivity(intent);
+    }
     @Override
     public void onClick(View v) {
 

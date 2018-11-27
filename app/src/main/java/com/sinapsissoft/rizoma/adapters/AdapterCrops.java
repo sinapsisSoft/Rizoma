@@ -77,7 +77,7 @@ public class AdapterCrops extends RecyclerView.Adapter<AdapterCrops.MyViewHolder
     public void onBindViewHolder(MyViewHolder myViewHolder, int i) {
         myViewHolder.tvProductName.setText(productList.get(i).getProductName());
         myViewHolder.tvProductDescription.setText(productList.get(i).getProducDescription());
-        myViewHolder.imgProductImage.setImageResource(productList.get(i).getProductImgId());
+        //myViewHolder.imgProductImage.setImageResource(productList.get(i).getProductImgId());
         myViewHolder.setOnClickListener();
 
     }

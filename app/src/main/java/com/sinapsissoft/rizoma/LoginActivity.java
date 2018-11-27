@@ -99,23 +99,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Valide los datos ingresados", Toast.LENGTH_LONG).show();
             focusView = textEmailView;
+            textEmailView.setError("Required");
             validate=false;
         }
         else if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Falta los datos de la contraseña", Toast.LENGTH_LONG).show();
             focusView = textPasswordView;
+            textPasswordView.setError("Required");
             validate=false;
         }
 
         if(!validate){
             focusView.requestFocus();
+
             return;
         }
         progressDialog.setMessage("Realizando login en línea...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {

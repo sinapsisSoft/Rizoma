@@ -1,8 +1,8 @@
 package com.sinapsissoft.rizoma.dto;
 
 public class Product {
-    private Integer productId;
-    private Integer cropsId;
+    private String productId;
+    private String cropsId;
     private String productName;
     private String productDescription;
     private String productType;
@@ -10,9 +10,9 @@ public class Product {
     private String productNameScientific;
     private String productUtilization;
     private String productImg;
-    private Integer productImgId;
+    private String productImgId;
 
-    public Product(Integer productId, Integer cropsId, String productName, String producDescription, String productType, String productCondition, String productNameScientific, String productUtilization, String productImg) {
+    public Product(String productId, String cropsId, String productName, String producDescription, String productType, String productCondition, String productNameScientific, String productUtilization, String productImg) {
         this.productId = productId;
         this.cropsId = cropsId;
         this.productName = productName;
@@ -37,27 +37,27 @@ public class Product {
         this.productDescription = productDescription;
     }
 
-    public Integer getProductImgId() {
+    public String getProductImgId() {
         return productImgId;
     }
 
-    public void setProductImgId(Integer productImgId) {
+    public void setProductImgId(String productImgId) {
         this.productImgId = productImgId;
     }
 
-    public Integer getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(Integer productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 
-    public Integer getCropsId() {
+    public String getCropsId() {
         return cropsId;
     }
 
-    public void setCropsId(Integer cropsId) {
+    public void setCropsId(String cropsId) {
         this.cropsId = cropsId;
     }
 
