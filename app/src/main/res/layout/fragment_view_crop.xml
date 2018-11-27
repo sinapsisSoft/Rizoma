@@ -34,7 +34,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/image_product"
+                        android:id="@+id/image_crop"
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
                         android:contentDescription="@string/action_registered"
@@ -42,11 +42,22 @@
                         android:src="@drawable/acelga" />
 
                     <TextView
-                        android:id="@+id/name_product"
+                        android:id="@+id/name_crops_scientific"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_above="@+id/description_product"
                         android:layout_gravity="bottom"
+                        android:background="#55a2aea7"
+                        android:padding="5dp"
+                        android:text="Acelga"
+                        android:textColor="#383737"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/name_crops"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
                         android:background="#8c000000"
                         android:padding="10dp"
                         android:text="Acelga"
@@ -58,8 +69,9 @@
                         android:id="@+id/description_product"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/image_product"
+                        android:layout_below="@+id/image_crop"
                         android:padding="@dimen/fab_margin"
+
                         android:text="La acelga es una planta que se caracteriza por su intenso color verde, sus grandes hojas comestibles y por su nervio central muy desarrollado. Mayormente se la cultiva con la misión de usarla como alimento en las comidas, aunque también se le reconocen beneficios para la salud. I Definicion ABC https://www.definicionabc.com/general/acelga.php" />
                 </RelativeLayout>
 

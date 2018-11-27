@@ -1,6 +1,7 @@
 package com.sinapsissoft.rizoma;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,11 +11,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.sinapsissoft.rizoma.adapters.AdapterCrops;
+import com.sinapsissoft.rizoma.dto.Crops;
+import com.sinapsissoft.rizoma.dto.FirebaseReferences;
 import com.sinapsissoft.rizoma.fragment.AlertCropFragment;
 import com.sinapsissoft.rizoma.fragment.ConfigurateCropFragment;
 import com.sinapsissoft.rizoma.fragment.CycleCropFragment;
@@ -23,7 +31,8 @@ import com.sinapsissoft.rizoma.fragment.PestFragment;
 
 
 public class DetailCrop extends AppCompatActivity implements ConfigurateCropFragment.OnFragmentInteractionListener,CropFragment.OnFragmentInteractionListener, AlertCropFragment.OnFragmentInteractionListener, CycleCropFragment.OnFragmentInteractionListener, PestFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
-
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +43,23 @@ public class DetailCrop extends AppCompatActivity implements ConfigurateCropFrag
         this.selectViewFragments(0);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+        startFirebase();
         loadView();
-
     }
 
     public void loadView() {
+
+        Crops objCrop=FirebaseReferences.CROP;
+        Toast.makeText(this,"ID"+objCrop.getCropId(),Toast.LENGTH_LONG).show();
+
+
+    }
+
+    private void startFirebase() {
+        FirebaseApp.initializeApp(this);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+
 
     }
 

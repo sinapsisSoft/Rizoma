@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,17 +29,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.sinapsissoft.rizoma.adapters.AdapterCrops;
 import com.sinapsissoft.rizoma.dto.Crops;
 import com.sinapsissoft.rizoma.dto.FirebaseReferences;
-import com.sinapsissoft.rizoma.dto.Product;
 import com.sinapsissoft.rizoma.dto.User;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -49,13 +47,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView textView;
     private RecyclerView recyclerViewCrop;
     private AdapterCrops mAdapter;
-    private TextView textViewUser;
+    private TextView tViewUser, tViewUserName;
+    private ImageView imgProfile;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-    private List<User>userList=new ArrayList<User>();
-    public static  String idUser="";
-
-
+    private List<User> userList = new ArrayList<User>();
+    public static String idUser = "";
+    private String userEmail;
+    List<Crops> listCrops;
 
 
     @Override
@@ -87,112 +86,102 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerViewCrop = (RecyclerView) findViewById(R.id.recycler_view_crops);
         recyclerViewCrop.setLayoutManager(new LinearLayoutManager(this));
 
-        // Declaración el ArrayList
-        final List<Product> listCrops = new ArrayList<>();
-        final List<Product> listCrops2 = new ArrayList<>();
 
-// Añadimos 10 Elementos en el ArrayList
-        Product product = null;
-        for (int i = 0; i < 1; i++) {
-            product = new Product();
-            product.setProductId(i+"");
-            product.setProductName("Producto: Acelga");
-            product.setProducDescription("Descripción: La acelga es una planta bianual y de ciclo largo que no forma raíz o fruto comestible.\n" +
-                    "\n" +
-                    "El vástago floral alcanza una altura promedio de 1,20 m.\n" +
-                    "\n" +
-                    "Las flores son sésiles y hermafroditas pudiendo aparecer solas o en grupos de dos o tres.\n" +
-                    "\n" +
-                    "El cáliz es de color verdoso y está compuesto por 5 sépalos y 5 pétalos.\n" +
-                    "\n" +
-                    "Las semillas son muy pequeñas y están encerradas en un pequeño fruto al que comúnmente se le llama semilla (realmente es un fruto), el que contiene de 3 a 4 semillas.");
-            //product.setProductImgId(R.drawable.acelga);
-            listCrops.add(product);
-        }
-
-        mAdapter = new AdapterCrops();
-
-        mAdapter.setDataSet(listCrops);
-
-        recyclerViewCrop.setAdapter(mAdapter);
-
-
-        String userEmail = getIntent().getStringExtra(LoginActivity.EXTRA_MESSAGE_LOGIN);
-
-        NavigationView navigationView1=(NavigationView)findViewById(R.id.nav_view);
-        View headerView =navigationView.getHeaderView(0);
-        textViewUser=headerView.findViewById(R.id.textUser);
-
-        //textViewUser.setText(userEmail);
+        NavigationView navigationView1 = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        tViewUser = headerView.findViewById(R.id.textUser);
+        tViewUserName= headerView.findViewById(R.id.textUserName);
+        imgProfile = headerView.findViewById(R.id.imgProfile);
 
         startFirebase();
         listDataUser();
-        // textView=(TextView)findViewById(R.id.text_home);
-        //textView.setText(message);
-        //databaseReference=FirebaseDatabase.getInstance();
+        listCrops();
+        getProfile();
 
-        //String id=databaseReference.push().getKey();
-        //databaseReference.child("product").child(id).setValue(product);
-       // DatabaseReference myRef=databaseReference.getReference(FirebaseReferences.USERS);
-        /*myRef.addValueEventListener(new ValueEventListener() {
+
+    }
+
+    private void listCrops() {
+        // Declaración el ArrayList
+
+        listCrops = new ArrayList<>();
+        mAdapter = new AdapterCrops();
+
+        recyclerViewCrop.setAdapter(mAdapter);
+        DatabaseReference refCrop = databaseReference.child(FirebaseReferences.CROPS);
+        refCrop.child(idUser).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user=dataSnapshot.getValue(User.class);
-                Log.i("KEY",user.getUserName());
+
+                listCrops.removeAll(listCrops);
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Crops crops = snapshot.getValue(Crops.class);
+                    Log.i("CROPS", crops.getCropId());
+                    listCrops.add(crops);
+                }
+                mAdapter.notifyDataSetChanged();
+                mAdapter.setDataSet(listCrops);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.i("CROPS", databaseError.getMessage());
             }
         });
-
-*/
-
 
     }
 
     private void listDataUser() {
-        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        if(user!=null){
-            String email=user.getEmail();
-            textViewUser.setText(email);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // User is signed in
+            String uid = user.getUid();
+            idUser = uid;
+            FirebaseReferences.userID = idUser;
+            //userEmail = user.getEmail();
+            //Toast.makeText(this, "is signed in" + uid, Toast.LENGTH_LONG).show();
+        } else {
+            //Toast.makeText(this, "No is signed in", Toast.LENGTH_LONG).show();// No user is signed in
         }
-        /*databaseReference.child(FirebaseReferences.USERS).addValueEventListener(new ValueEventListener() {
+    }
+
+    private void getProfile() {
+        DatabaseReference referenceUsers = databaseReference.child(FirebaseReferences.USERS);
+        referenceUsers.child(FirebaseReferences.userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                 userList.clear();
-                 for(DataSnapshot snapshot:dataSnapshot.getChildren()){
 
-                     User u=snapshot.getValue(User.class);
+                    User user = dataSnapshot.getValue(User.class);
+                    tViewUser.setText(user.getUserMail());
+                    tViewUserName.setText(user.getUserName()+" "+user.getUserSurname());
+                    Picasso.with(getApplicationContext()).load(user.getUserImg()).resize(60,60).centerCrop().into(imgProfile);
 
-                     userList.add(u);
-                     Log.i(FirebaseReferences.USERS,u.toString());
-                 }
+                    Log.i("CROPS", dataSnapshot.toString());
+
+
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.i("CROPS", databaseError.getMessage());
             }
-        });*/
+        });
+
+
+
     }
 
-    private void startFirebase(){
+    private void startFirebase() {
         FirebaseApp.initializeApp(this);
-        firebaseDatabase=FirebaseDatabase.getInstance();
-        databaseReference=firebaseDatabase.getReference();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+        listDataUser();
 
-        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            // User is signed in
-            String uid = user.getUid();
-            idUser=uid;
-            Toast.makeText(this,"is signed in"+uid,Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this,"No is signed in",Toast.LENGTH_LONG).show();// No user is signed in
-        }
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -250,51 +239,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    private void updateUser(String sId){
-        User user=new User();
-        user.setUserId(idUser);
-        databaseReference.child(FirebaseReferences.USERS).child(user.getUserId()).setValue(user);
-        databaseReference.child(FirebaseReferences.USERS).child(user.getUserId()).child("idCrops").setValue(sId);
 
-    }
-    private void createCrop(){
-        Crops crops=new Crops();
-        crops.setCropsId(UUID.randomUUID().toString());
+    private void createCrop() {
+        Crops crops = new Crops();
         Date currentTime = getInstance().getTime();
-        crops.setCropsDateEnd(currentTime.toString());
-        databaseReference.child(FirebaseReferences.CROPS).child(idUser).child(crops.getCropsId()).setValue(crops);
-        /*databaseReference.child(FirebaseReferences.PRODUCT).child(crops.getCropsId()).child().setValue(crops);*/
-         Toast.makeText(this,"Data:"+incrementCounter(databaseReference),Toast.LENGTH_LONG).show();
+        crops.setCropId(UUID.randomUUID().toString());
+
+        crops.setCropDateStart(currentTime.toString());
+        crops.setCropName("Lechuga");
+        crops.setCropNameScientific("Lactuca sativa L");
+        crops.setCropType("Quenopodiáceas");
+        crops.setCropDescription("La lechuga es conocida y cultivada en todo el mundo. En Lanzarote en el año 2010 existía 26 Ha\n" +
+                "de superficie cultivada, según datos del Servicio de Estadísticas del Gobierno de Canarias. La\n" +
+                "lechuga es un producto que tiene un alto contenido en agua y además posee un bajo valor\n" +
+                "energético, por lo que se puede utilizar en dietas hipocalóricas. Es rica en antioxidantes como la\n" +
+                "vitamina A,C, E, B1, B2, B3 y minerales (fósforo, hierro, calcio, potasio).");
+        crops.setCropImg("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQc8JrRmE1Zdx5V8We4TVg9xIPPp1RgSvYMF05BH_OT6MNaWrtr");
+
+        databaseReference.child(FirebaseReferences.CROPS).child(idUser).child(crops.getCropId()).setValue(crops);
 
 
     }
 
-    public Integer incrementCounter(DatabaseReference reference) {
-
-        reference.runTransaction(new Transaction.Handler() {
-            @NonNull
-            @Override
-            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
-                if (mutableData.getValue() == null) {
-                    mutableData.setValue(1);
-                } else {
-                    mutableData.setValue((long) mutableData.getValue() + 1);
-                }
-                return Transaction.success(mutableData);
-            }
-
-            @Override
-            public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
-                if (databaseError != null) {
-                    Log.d("ERROR", "Firebase counter increment failed.");
-                } else {
-                    Log.d("ERROR", "Firebase counter increment succeeded.");
-                }
-            }
-
-
-        });
-        return null;
-    }
 
 }

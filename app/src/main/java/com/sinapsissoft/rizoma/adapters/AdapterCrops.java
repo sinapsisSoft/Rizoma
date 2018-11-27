@@ -9,29 +9,39 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.sinapsissoft.rizoma.DetailCrop;
+import com.sinapsissoft.rizoma.LoginActivity;
 import com.sinapsissoft.rizoma.R;
-import com.sinapsissoft.rizoma.dto.Product;
+import com.sinapsissoft.rizoma.dto.Crops;
+import com.sinapsissoft.rizoma.dto.FirebaseReferences;
+import com.squareup.picasso.Picasso;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterCrops extends RecyclerView.Adapter<AdapterCrops.MyViewHolder>  {
 
-    public List<Product> productList;
+    public List<Crops> cropsList;
+    private static final int MAX_WIDTH = 150;
+    private static final int MAX_HEIGHT = 150;
+    public static final String EXTRA_MESSAGE_LOGIN = "com.sinapsissoft.rizoma.CROPS";
 
 
     public AdapterCrops() {
-        productList = new ArrayList<>();
+        cropsList = new ArrayList<>();
     }
 
-    public void setDataSet(List<Product> list) {
-        productList = list;
+    public void setDataSet(List<Crops> list) {
+        cropsList = list;
         notifyDataSetChanged();
 
     }
 
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvProductName;
         private TextView tvProductDescription;
         private ImageView imgProductImage;
@@ -46,6 +56,7 @@ public class AdapterCrops extends RecyclerView.Adapter<AdapterCrops.MyViewHolder
             imgProductImage = (ImageView) view.findViewById(R.id.img_product);
             imgBtnDetail = (ImageView) view.findViewById(R.id.img_btn_detail_crops);
 
+
         }
 
         public void setOnClickListener() {
@@ -54,15 +65,18 @@ public class AdapterCrops extends RecyclerView.Adapter<AdapterCrops.MyViewHolder
 
         @Override
         public void onClick(View v) {
+
             switch (v.getId()){
                 case R.id.img_btn_detail_crops:
                     Intent intent=new Intent(context,DetailCrop.class);
+                    FirebaseReferences.CROP=cropsList.get(getPosition());
                     context.startActivity(intent);
 
                     break;
             }
         }
     }
+
 
     @NonNull
     @Override
@@ -75,9 +89,12 @@ public class AdapterCrops extends RecyclerView.Adapter<AdapterCrops.MyViewHolder
 
     @Override
     public void onBindViewHolder(MyViewHolder myViewHolder, int i) {
-        myViewHolder.tvProductName.setText(productList.get(i).getProductName());
-        myViewHolder.tvProductDescription.setText(productList.get(i).getProducDescription());
-        //myViewHolder.imgProductImage.setImageResource(productList.get(i).getProductImgId());
+        Context context=myViewHolder.imgProductImage.getContext();
+        myViewHolder.tvProductName.setText(cropsList.get(i).getCropName());
+        myViewHolder.tvProductDescription.setText(cropsList.get(i).getCropDescription());
+        myViewHolder.imgBtnDetail.setTag(cropsList.get(i).getCropId());
+        Picasso.with(context).load(cropsList.get(i).getCropImg()).resize(MAX_WIDTH,MAX_HEIGHT).centerCrop().into(myViewHolder.imgProductImage);
+
         myViewHolder.setOnClickListener();
 
     }
@@ -85,7 +102,7 @@ public class AdapterCrops extends RecyclerView.Adapter<AdapterCrops.MyViewHolder
     @Override
     public int getItemCount() {
 
-        return productList.size();
+        return cropsList.size();
     }
 
 

@@ -7,8 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.sinapsissoft.rizoma.R;
+import com.sinapsissoft.rizoma.dto.Crops;
+import com.sinapsissoft.rizoma.dto.FirebaseReferences;
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -28,6 +33,8 @@ public class CropFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private static final int MAX_WIDTH = 250;
+    private static final int MAX_HEIGHT = 250;
 
     private OnFragmentInteractionListener mListener;
 
@@ -35,15 +42,7 @@ public class CropFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CropFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static CropFragment newInstance(String param1, String param2) {
         CropFragment fragment = new CropFragment();
         Bundle args = new Bundle();
@@ -72,7 +71,21 @@ public class CropFragment extends Fragment {
         // Inflate the layout for this fragment
         // Please note the third parameter should be false, otherwise a java.lang.IllegalStateException maybe thrown.
         View retView = inflater.inflate(R.layout.fragment_view_crop, container, false);
+        loadDataDetail(retView);
         return retView;
+    }
+    public void loadDataDetail(View view){
+        Crops crops=FirebaseReferences.CROP;
+        ImageView imgViewCrop=view.findViewById(R.id.image_crop);
+        TextView tViewCropName=view.findViewById(R.id.name_crops);
+        TextView tViewCropNameScientific=view.findViewById(R.id.name_crops_scientific);
+        TextView tVCropDescription=view.findViewById(R.id.description_product);
+
+        Picasso.with(getContext()).load(crops.getCropImg()).resize(MAX_WIDTH,MAX_HEIGHT).centerCrop().into(imgViewCrop);
+        tViewCropName.setText(crops.getCropName());
+        tViewCropNameScientific.setText(crops.getCropNameScientific());
+        tVCropDescription.setText(crops.getCropDescription());
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -99,16 +112,6 @@ public class CropFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

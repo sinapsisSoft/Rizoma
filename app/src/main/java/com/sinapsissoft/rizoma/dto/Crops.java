@@ -2,81 +2,130 @@ package com.sinapsissoft.rizoma.dto;
 
 public class Crops {
 
-    private String cropsId;
-    private String productId;
-    private String userId;
-    private String cropsState;
-    private String cropsDateStart;
-    private String cropsDateEnd;
-    private Integer cropsType;
+    private String cropId;
+    private String cropState;
+    private String cropDateStart;
+    private String cropDateEnd;
+    private String cropType;
+    private String cropName;
+    private String cropDescription;
+    private String cropCondition;
+    private String cropNameScientific;
+    private String cropUtilization;
+    private String cropImg;
+    private String cropImgId;
 
     public Crops() {
-
     }
 
-    public Crops(String id, String product, String user, String state, String dateStart, String dateEnd, Integer cropsType) {
-        this.cropsId = id;
-        this.productId = product;
-        this.userId = user;
-        this.cropsState = state;
-        this.cropsDateStart = dateStart;
-        this.cropsDateEnd = dateEnd;
-        this.cropsType = cropsType;
+    public Crops(String cropId, String cropState, String cropDateStart, String cropDateEnd, String cropType, String cropName, String cropDescription, String cropCondition, String cropNameScientific, String cropUtilization, String cropImg, String cropImgId) {
+        this.cropId = cropId;
+        this.cropState = cropState;
+        this.cropDateStart = cropDateStart;
+        this.cropDateEnd = cropDateEnd;
+        this.cropType = cropType;
+        this.cropName = cropName;
+        this.cropDescription = cropDescription;
+        this.cropCondition = cropCondition;
+        this.cropNameScientific = cropNameScientific;
+        this.cropUtilization = cropUtilization;
+        this.cropImg = cropImg;
+        this.cropImgId = cropImgId;
     }
 
-    public String getCropsId() {
-        return cropsId;
+    public String getCropId() {
+        return cropId;
     }
 
-    public void setCropsId(String cropsId) {
-        this.cropsId = cropsId;
+    public void setCropId(String cropId) {
+        this.cropId = cropId;
     }
 
-    public String getProductId() {
-        return productId;
+    public String getCropState() {
+        return cropState;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setCropState(String cropState) {
+        this.cropState = cropState;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getCropDateStart() {
+        return cropDateStart;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setCropDateStart(String cropDateStart) {
+        this.cropDateStart = cropDateStart;
     }
 
-    public String getCropsState() {
-        return cropsState;
+    public String getCropDateEnd() {
+        return cropDateEnd;
     }
 
-    public void setCropsState(String cropsState) {
-        this.cropsState = cropsState;
+    public void setCropDateEnd(String cropDateEnd) {
+        this.cropDateEnd = cropDateEnd;
     }
 
-    public String getCropsDateStart() {
-        return cropsDateStart;
+    public String getCropType() {
+        return cropType;
     }
 
-    public void setCropsDateStart(String cropsDateStart) {
-        this.cropsDateStart = cropsDateStart;
+    public void setCropType(String cropType) {
+        this.cropType = cropType;
     }
 
-    public String getCropsDateEnd() {
-        return cropsDateEnd;
+    public String getCropName() {
+        return cropName;
     }
 
-    public void setCropsDateEnd(String cropsDateEnd) {
-        this.cropsDateEnd = cropsDateEnd;
+    public void setCropName(String cropName) {
+        this.cropName = cropName;
     }
 
-    public Integer getCropsType() {
-        return cropsType;
+    public String getCropDescription() {
+        return cropDescription;
     }
 
-    public void setCropsType(Integer cropsType) {
-        this.cropsType = cropsType;
+    public void setCropDescription(String cropDescription) {
+        this.cropDescription = cropDescription;
+    }
+
+    public String getCropCondition() {
+        return cropCondition;
+    }
+
+    public void setCropCondition(String cropCondition) {
+        this.cropCondition = cropCondition;
+    }
+
+    public String getCropNameScientific() {
+        return cropNameScientific;
+    }
+
+    public void setCropNameScientific(String cropNameScientific) {
+        this.cropNameScientific = cropNameScientific;
+    }
+
+    public String getCropUtilization() {
+        return cropUtilization;
+    }
+
+    public void setCropUtilization(String cropUtilization) {
+        this.cropUtilization = cropUtilization;
+    }
+
+    public String getCropImg() {
+        return cropImg;
+    }
+
+    public void setCropImg(String cropImg) {
+        this.cropImg = cropImg;
+    }
+
+    public String getCropImgId() {
+        return cropImgId;
+    }
+
+    public void setCropImgId(String cropImgId) {
+        this.cropImgId = cropImgId;
     }
 }
