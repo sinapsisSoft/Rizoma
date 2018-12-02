@@ -1,9 +1,7 @@
 package com.sinapsissoft.rizoma;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sinapsissoft.rizoma.adapters.AdapterCrops;
 import com.sinapsissoft.rizoma.dto.Crops;
-import com.sinapsissoft.rizoma.dto.FirebaseReferences;
+import com.sinapsissoft.rizoma.my_class.FirebaseReferences;
 import com.sinapsissoft.rizoma.dto.User;
 import com.squareup.picasso.Picasso;
 
@@ -86,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerViewCrop = (RecyclerView) findViewById(R.id.recycler_view_crops);
         recyclerViewCrop.setLayoutManager(new LinearLayoutManager(this));
 
-
         NavigationView navigationView1 = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         tViewUser = headerView.findViewById(R.id.textUser);
@@ -95,12 +91,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         startFirebase();
         listDataUser();
-        listCrops();
+
         getProfile();
 
 
     }
+    @Override
+    protected void onStart () {
 
+        super.onStart();
+        listCrops();
+    }
     private void listCrops() {
         // Declaración el ArrayList
 

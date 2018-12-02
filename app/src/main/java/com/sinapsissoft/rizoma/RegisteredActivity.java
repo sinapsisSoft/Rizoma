@@ -21,10 +21,8 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.sinapsissoft.rizoma.dto.FirebaseReferences;
+import com.sinapsissoft.rizoma.my_class.FirebaseReferences;
 import com.sinapsissoft.rizoma.dto.User;
-
-import java.util.UUID;
 
 
 public class RegisteredActivity extends AppCompatActivity implements View.OnClickListener {

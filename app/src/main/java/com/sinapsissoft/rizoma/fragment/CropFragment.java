@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.sinapsissoft.rizoma.R;
 import com.sinapsissoft.rizoma.dto.Crops;
-import com.sinapsissoft.rizoma.dto.FirebaseReferences;
+import com.sinapsissoft.rizoma.my_class.FirebaseReferences;
 import com.squareup.picasso.Picasso;
 
 

@@ -9,13 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sinapsissoft.rizoma.DetailCrop;
-import com.sinapsissoft.rizoma.LoginActivity;
 import com.sinapsissoft.rizoma.R;
 import com.sinapsissoft.rizoma.dto.Crops;
-import com.sinapsissoft.rizoma.dto.FirebaseReferences;
+import com.sinapsissoft.rizoma.my_class.FirebaseReferences;
 import com.squareup.picasso.Picasso;
 
 
