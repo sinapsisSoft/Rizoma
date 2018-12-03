@@ -1,12 +1,10 @@
 package com.sinapsissoft.rizoma;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,50 +16,60 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.sinapsissoft.rizoma.adapters.AdapterCrops;
 import com.sinapsissoft.rizoma.dto.Crops;
-import com.sinapsissoft.rizoma.my_class.FirebaseReferences;
-import com.sinapsissoft.rizoma.dto.User;
-import com.squareup.picasso.Picasso;
+import com.sinapsissoft.rizoma.my_class.FirebaseModel;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static java.util.Calendar.*;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private TextView textView;
+
     private RecyclerView recyclerViewCrop;
     private AdapterCrops mAdapter;
     private TextView tViewUser, tViewUserName;
-    private ImageView imgProfile;
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
-    private List<User> userList = new ArrayList<User>();
+    private CircleImageView imgProfile;
     public static String idUser = "";
-    private String userEmail;
-    List<Crops> listCrops;
+    private List<Crops> listCrops;
+    private Toolbar toolbar;
+    private FirebaseModel firebaseModel;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        loadToolbar();
+        loadNavigationView();
+        loadDrawerLayout();
+        loadView();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+    }
+
+    private void loadDrawerLayout() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    private void loadNavigationView() {
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        tViewUser = headerView.findViewById(R.id.textUser);
+        tViewUserName = headerView.findViewById(R.id.textUserName);
+        imgProfile = headerView.findViewById(R.id.imgProfile);
+    }
+
+    private void loadView() {
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,116 +78,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 createCrop();
             }
         });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        recyclerViewCrop = (RecyclerView) findViewById(R.id.recycler_view_crops);
+        recyclerViewCrop = findViewById(R.id.recycler_view_crops);
         recyclerViewCrop.setLayoutManager(new LinearLayoutManager(this));
+    }
 
-        NavigationView navigationView1 = (NavigationView) findViewById(R.id.nav_view);
-        View headerView = navigationView.getHeaderView(0);
-        tViewUser = headerView.findViewById(R.id.textUser);
-        tViewUserName= headerView.findViewById(R.id.textUserName);
-        imgProfile = headerView.findViewById(R.id.imgProfile);
+    private void loadToolbar() {
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         startFirebase();
-        listDataUser();
-
         getProfile();
-
-
-    }
-    @Override
-    protected void onStart () {
-
-        super.onStart();
         listCrops();
     }
+
     private void listCrops() {
-        // Declaración el ArrayList
-
-        listCrops = new ArrayList<>();
-        mAdapter = new AdapterCrops();
-
+        listCrops = firebaseModel.listCrops();
+        mAdapter = new AdapterCrops(this);
         recyclerViewCrop.setAdapter(mAdapter);
-        DatabaseReference refCrop = databaseReference.child(FirebaseReferences.CROPS);
-        refCrop.child(idUser).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                listCrops.removeAll(listCrops);
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Crops crops = snapshot.getValue(Crops.class);
-                    Log.i("CROPS", crops.getCropId());
-                    listCrops.add(crops);
-                }
-                mAdapter.notifyDataSetChanged();
-                mAdapter.setDataSet(listCrops);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.i("CROPS", databaseError.getMessage());
-            }
-        });
+        listCrops.removeAll(listCrops);
+        mAdapter.notifyDataSetChanged();
+        mAdapter.setDataSet(listCrops);
 
     }
 
-    private void listDataUser() {
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            // User is signed in
-            String uid = user.getUid();
-            idUser = uid;
-            FirebaseReferences.userID = idUser;
-            //userEmail = user.getEmail();
-            //Toast.makeText(this, "is signed in" + uid, Toast.LENGTH_LONG).show();
-        } else {
-            //Toast.makeText(this, "No is signed in", Toast.LENGTH_LONG).show();// No user is signed in
-        }
-    }
 
     private void getProfile() {
-        DatabaseReference referenceUsers = databaseReference.child(FirebaseReferences.USERS);
-        referenceUsers.child(FirebaseReferences.userID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    User user = dataSnapshot.getValue(User.class);
-                    tViewUser.setText(user.getUserMail());
-                    tViewUserName.setText(user.getUserName()+" "+user.getUserSurname());
-                    Picasso.with(getApplicationContext()).load(user.getUserImg()).resize(60,60).centerCrop().into(imgProfile);
-
-                    Log.i("CROPS", dataSnapshot.toString());
-
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.i("CROPS", databaseError.getMessage());
-            }
-        });
-
-
+        firebaseModel.getProfile(tViewUser,tViewUserName,imgProfile,this);
 
     }
 
     private void startFirebase() {
+        firebaseModel = new FirebaseModel();
         FirebaseApp.initializeApp(this);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
-        listDataUser();
 
     }
 
@@ -221,17 +157,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_pest) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_crop) {
 
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_profile) {
 
         }
 
@@ -257,7 +192,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 "vitamina A,C, E, B1, B2, B3 y minerales (fósforo, hierro, calcio, potasio).");
         crops.setCropImg("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQc8JrRmE1Zdx5V8We4TVg9xIPPp1RgSvYMF05BH_OT6MNaWrtr");
 
-        databaseReference.child(FirebaseReferences.CROPS).child(idUser).child(crops.getCropId()).setValue(crops);
+
+        //databaseReference.child(FirebaseReferences.CROPS).child(idUser).child(crops.getCropId()).setValue(crops);
 
 
     }

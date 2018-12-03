@@ -1,4 +1,8 @@
 <resources>
+    <!--String view Menu -->
+    <string name="nav_user">Perfil</string>
+    <string name="nav_crop">Cultivos</string>
+
     <!--String view Rizoma registered User-->
     <string name="text_user">Usuario</string>
     <string name="text_password">Contraseña</string>
@@ -64,4 +68,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="transition">animation_image</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
 </resources>

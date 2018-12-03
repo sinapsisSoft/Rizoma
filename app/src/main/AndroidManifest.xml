@@ -40,11 +40,19 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.sinapsissoft.rizoma.LoginActivity"></meta-data>
+                android:value="com.sinapsissoft.rizoma.LoginActivity" />
         </activity>
         <activity
             android:name=".DetailCrop"
             android:label="@string/title_activity_detail_crop"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sinapsissoft.rizoma.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

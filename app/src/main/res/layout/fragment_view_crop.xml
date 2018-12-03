@@ -38,7 +38,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
                         android:contentDescription="@string/action_registered"
-                        android:scaleType="fitCenter"
+                        android:scaleType="centerCrop"
+                        android:transitionName="@string/transition"
                         android:src="@drawable/acelga" />
 
                     <TextView

@@ -1,9 +1,16 @@
 package com.sinapsissoft.rizoma.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +27,19 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class AdapterCrops extends RecyclerView.Adapter<AdapterCrops.MyViewHolder>  {
 
     public List<Crops> cropsList;
     private static final int MAX_WIDTH = 150;
     private static final int MAX_HEIGHT = 150;
-    public static final String EXTRA_MESSAGE_LOGIN = "com.sinapsissoft.rizoma.CROPS";
+    private Activity myActivity;
 
 
-    public AdapterCrops() {
+    public AdapterCrops(Activity activity) {
         cropsList = new ArrayList<>();
+        this.myActivity=activity;
     }
 
     public void setDataSet(List<Crops> list) {
@@ -42,17 +52,17 @@ public class AdapterCrops extends RecyclerView.Adapter<AdapterCrops.MyViewHolder
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvProductName;
         private TextView tvProductDescription;
-        private ImageView imgProductImage;
+        private CircleImageView imgProductImage;
         private ImageView imgBtnDetail;
-        Context context;
+
 
         public MyViewHolder(View view) {
             super(view);
-            context=view.getContext();
-            tvProductName = (TextView) view.findViewById(R.id.tv_product_name);
-            tvProductDescription = (TextView) view.findViewById(R.id.tv_product_description);
-            imgProductImage = (ImageView) view.findViewById(R.id.img_product);
-            imgBtnDetail = (ImageView) view.findViewById(R.id.img_btn_detail_crops);
+
+            tvProductName =  view.findViewById(R.id.tv_product_name);
+            tvProductDescription =  view.findViewById(R.id.tv_product_description);
+            imgProductImage = view.findViewById(R.id.img_product);
+            imgBtnDetail =  view.findViewById(R.id.img_btn_detail_crops);
 
 
         }
@@ -66,9 +76,18 @@ public class AdapterCrops extends RecyclerView.Adapter<AdapterCrops.MyViewHolder
 
             switch (v.getId()){
                 case R.id.img_btn_detail_crops:
-                    Intent intent=new Intent(context,DetailCrop.class);
+                    Intent intent=new Intent(myActivity,DetailCrop.class);
                     FirebaseReferences.CROP=cropsList.get(getPosition());
-                    context.startActivity(intent);
+                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+
+
+                        myActivity.getWindow().setExitTransition(new Explode() );
+                        myActivity.startActivity(intent,
+                                ActivityOptionsCompat.makeSceneTransitionAnimation(myActivity,v,myActivity.getString(R.string.transition)).toBundle());
+                    }else{
+                        myActivity.startActivity(intent);
+                    }
+
 
                     break;
             }
@@ -91,7 +110,12 @@ public class AdapterCrops extends RecyclerView.Adapter<AdapterCrops.MyViewHolder
         myViewHolder.tvProductName.setText(cropsList.get(i).getCropName());
         myViewHolder.tvProductDescription.setText(cropsList.get(i).getCropDescription());
         myViewHolder.imgBtnDetail.setTag(cropsList.get(i).getCropId());
-        Picasso.with(context).load(cropsList.get(i).getCropImg()).resize(MAX_WIDTH,MAX_HEIGHT).centerCrop().into(myViewHolder.imgProductImage);
+        Picasso
+                .with(context)
+                .load(cropsList.get(i).getCropImg())
+                .resize(MAX_WIDTH,MAX_HEIGHT).
+                centerCrop().
+                into(myViewHolder.imgProductImage);
 
         myViewHolder.setOnClickListener();
 

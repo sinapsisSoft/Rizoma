@@ -34,8 +34,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     implementation 'com.google.firebase:firebase-auth:16.0.5'
     implementation 'com.google.firebase:firebase-database:16.0.5'
-    implementation group:'com.squareup.picasso', name:'picasso', version:'2.5.0'
+    implementation group: 'com.squareup.picasso', name: 'picasso', version: '2.5.0'
     implementation 'com.android.support:design:28.0.0'
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
 
 }
 // ADD THIS AT THE BOTTOM

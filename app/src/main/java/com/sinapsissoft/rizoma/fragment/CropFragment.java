@@ -81,7 +81,7 @@ public class CropFragment extends Fragment {
         TextView tViewCropNameScientific=view.findViewById(R.id.name_crops_scientific);
         TextView tVCropDescription=view.findViewById(R.id.description_product);
 
-        Picasso.with(getContext()).load(crops.getCropImg()).resize(MAX_WIDTH,MAX_HEIGHT).centerCrop().into(imgViewCrop);
+        Picasso.with(getContext()).load(crops.getCropImg()).fit().into(imgViewCrop);
         tViewCropName.setText(crops.getCropName());
         tViewCropNameScientific.setText(crops.getCropNameScientific());
         tVCropDescription.setText(crops.getCropDescription());

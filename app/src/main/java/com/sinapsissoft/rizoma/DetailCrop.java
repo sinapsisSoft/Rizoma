@@ -2,6 +2,7 @@ package com.sinapsissoft.rizoma;
 
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,6 +11,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -49,15 +54,12 @@ public class DetailCrop extends AppCompatActivity implements ConfigurateCropFrag
         Crops objCrop=FirebaseReferences.CROP;
         Toast.makeText(this,"ID"+objCrop.getCropId(),Toast.LENGTH_LONG).show();
 
-
     }
 
     private void startFirebase() {
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
-
-
     }
 
 
@@ -65,7 +67,18 @@ public class DetailCrop extends AppCompatActivity implements ConfigurateCropFrag
     private void replaceFragment(Fragment fragmentDefault) {
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container_fragments, fragmentDefault);
+       // fragmentTransaction.setCustomAnimations(R.anim.left_out,R.anim.left_in);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            Slide slide=new Slide(Gravity.RIGHT);
+            slide.setDuration(500);
+            fragmentDefault.setEnterTransition(slide);
+            fragmentDefault.setReenterTransition(new Fade());
+            fragmentTransaction.replace(R.id.container_fragments, fragmentDefault);
+
+        }else{
+            fragmentTransaction.replace(R.id.container_fragments, fragmentDefault);
+        }
+
         fragmentTransaction.commit();
 
     }
@@ -135,8 +148,6 @@ public class DetailCrop extends AppCompatActivity implements ConfigurateCropFrag
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
-
-
         inflater.inflate(R.menu.detail, menu);
         //menu.getItem(0).setVisible(false);
         return true;
